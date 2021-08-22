@@ -2,41 +2,33 @@ import React, { useEffect, useState } from "react";
 
 export default function Updateproduct(props) {
   const id = props.match.params.id;
-  const [pN, setPn] = useState("");
-  const [pE, setPe] = useState("");
-  const [pP, setPp] = useState("");
-  const [pDesc, setpDesc] = useState("");
-  const [pL, setPl] = useState("");
-  const [pC, setPc] = useState("");
-
-  const [email, setEmail] = useState("");
   const [productName, setProductName] = useState("");
   const [price, setPrice] = useState("");
   const [desc, setDesc] = useState("");
-  const [lastUpdate, setLastUpdate] = useState("");
-  const [created, setCreated] = useState("");
+
+
+  const [product, setProduct] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:5000/product_details/" + id, {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => {
-        setPn(result.name);
-        setPe(result.add_by_user);
-        setPp(result.price);
-        setpDesc(result.description);
-        setPl(result.updated_at)
-        setPc(result.created_at)
+    const fetchProducts = async () => {
+      await fetch("http://127.0.0.1:5000/product_details/" + id, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }).then((result) => {
+        result.json().then((response) => {
+          console.log(response);
+          setProduct(response);
+        });
       });
-  });
+    };
+    fetchProducts();
+  }, []);
 
   function updateProduct() {
-    console.log(productName);
+    console.log(product.add_by_user);
   }
 
   return (
@@ -63,7 +55,7 @@ export default function Updateproduct(props) {
           type="text"
           className="form-control"
           id="name"
-          value={pN}
+          value={product.name}
           onChange={(e) => setProductName(e.target.value)}
           aria-describedby="nameHelp"
         />
@@ -76,7 +68,7 @@ export default function Updateproduct(props) {
           type="number"
           className="form-control"
           id="price"
-          value={pP}
+          value={product.price}
           onChange={(e) => {
             setPrice(e.target.value);
           }}
@@ -91,12 +83,12 @@ export default function Updateproduct(props) {
           name="desc"
           className="form-control"
           id="desc"
-          value={desc}
+          value={product.description}
           rows="5"
         ></textarea>
       </div>
       <button type="submit" className="btn btn-primary" onClick={updateProduct}>
-        Add Product
+        Update Product
       </button>
     </div>
   );

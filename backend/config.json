@@ -1,0 +1,9 @@
+{
+  "params": {
+    "local_server": "True",
+    "db_user_name": "root",
+    "db_user_password": "",
+    "db_server": "localhost",
+    "db_name": "ecommerce"
+  }
+}

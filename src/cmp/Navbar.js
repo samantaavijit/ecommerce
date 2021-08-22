@@ -33,15 +33,7 @@ export default class Navbar extends Component {
               </li>
             </ul>
             <form className="d-flex">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success me-3" type="submit">
-                Search
-              </button>
+              
               <button className="btn btn-primary" onClick={() => this.logOut()}>
                 Logout
               </button>
